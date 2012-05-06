@@ -4,7 +4,7 @@ The following Github repositories contain libraries and examples using
 BigML's API to create and use datasets, models and predictions
 programmatically.
 
-- https://github.com/bigmlcom/bash -- Bash bindings
+- https://github.com/bigmlcom/bigml-bash -- Bash bindings
 - https://github.com/bigmlcom/python -- Python bindings
 
 ## Support
