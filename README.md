@@ -9,6 +9,7 @@ programmatically:
 - [Python bindings](https://github.com/bigmlcom/python)
 - [Bigmler](https://github.com/bigmlcom/bigmler) model ensembles and more using Python, on top of our basic API
 - [Clojure bindings](https://github.com/bigmlcom/clj-bigml)
+- [C# bindings](https://github.com/bigmlcom/bigml-csharp)
 - [R bindings](https://github.com/bigmlcom/bigml-r)
 - [Bash bindings](https://github.com/bigmlcom/bigml-bash)
 - [Ruby bindings](http://vigosan.github.com/big_ml/)
