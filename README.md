@@ -8,6 +8,7 @@ programmatically:
 
 - [Python bindings](https://github.com/bigmlcom/python)
 - [Bigmler](https://github.com/bigmlcom/bigmler) model ensembles and more using Python, on top of our basic API
+- [Node.js bindings](https://github.com/bigmlcom/bigml-node)
 - [Clojure bindings](https://github.com/bigmlcom/clj-bigml)
 - [C# bindings](https://github.com/bigmlcom/bigml-csharp)
 - [R bindings](https://github.com/bigmlcom/bigml-r)
