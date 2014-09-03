@@ -25,6 +25,14 @@ We have also open-sourced some general-purpose libraries:
 
 ## Support
 
+### Bindings' developers news
+
+If you want to contribute to the bindings, the
+[bindings' developers guide](https://github.com/bigmlcom/io/bindings/guide.md)
+or [API news](https://github.com/bigmlcom/io/bindings/news.md) can help you to
+be informed about
+next features to come.
+
 ### Bug Reporting
 
 If you encounter problems or have suggestions for improving the bindings, please fill a bug report in
