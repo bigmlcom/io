@@ -56,13 +56,13 @@ appearance.
 
 The simplest example of tree using missing splits is obtained by creating
 a model from the following
-[source file](https://github.com/bigmlcom/io/bindings/data/iris_missing.csv)
+[source file](bindings/data/iris_missing.csv)
 using the
 create source, create dataset and create model calls and ensuring that
 `missing_splits` is set to true in the last one.
 
 Other examples are the
-[titanic dataset](https://github.com/bigmlcom/io/bindings/data/titanic.csv.gz),
+[titanic dataset](bindings/data/titanic.csv.gz),
 excluding fields "000000",
 "000004", and "000008" (which are "Name", "Fare", and "Job") to predict
 survival.  The first split ends up checking whether the categorical
@@ -71,7 +71,7 @@ Deeper in the tree there are some missing splits
 on numeric fields (">*" and "<=*"splits).
 
 Also a very small
-[handmade dataset](https://github.com/bigmlcom/io/bindings/data/missing-test.csv).
+[handmade dataset](bindings/data/missing-test.csv).
 The dataset has 5 fields. Training the model with any of the field
 combinations below should end up with a tree that uses missing splits
 and manages to fit the training data exactly.  So predictions using the

@@ -58,9 +58,9 @@ and good quality code needs good quality documents and tests to reach its goal.
 
 Backend new features:
 
-There's an [API news](bindings/news.md) notice
+There's an [API news](news.md) notice
 in this report that will be updated to
 show the features recently added in the API. It will also provide any
 information needed to create the corresponding bindings interface. We will keep
-a [historic record](bindings/archive/) for the
+a [historic record](archive/) for the
 latest new features as they are updated.
