@@ -28,8 +28,8 @@ We have also open-sourced some general-purpose libraries:
 ### Bindings' developers news
 
 If you want to contribute to the bindings, the
-[bindings' developers guide](https://github.com/bigmlcom/io/bindings/guide.md)
-or [API news](https://github.com/bigmlcom/io/bindings/news.md) can help you to
+[bindings' developers guide](bindings/guide.md)
+or [API news](bindings/news.md) can help you to
 be informed about
 next features to come.
 

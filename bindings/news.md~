@@ -82,3 +82,18 @@ Input fields: 0, 1 -- Objective field: 3
 Input fields: 0, 1 -- Objective field: 4
 Input fields: 0, 2 -- Objective field: 3
 Input fields: 0, 2 -- Objective field: 4
+
+Bugs
+====
+
+An implementation bug has been detected both in the Python and Node.js old
+version of the bindings. It applies only to the regression models when
+proportional missing strategy is used in local predictions. There's a singular
+use case where the node in the tree that gives the final prediction contains
+only 1 instance. This is a singular case where the algorithm that is used
+at present to compute the associated error cannot be used (the previous code
+was returning NaN as result). Instead, the
+returned prediction, error and distribution values must be the ones in the
+1-instance node. You can check commit
+[bdc625f](https://github.com/bigmlcom/python/commit/bdc625fe4ea0ba84c265e5cf7545c10595f86b95)
+for a solution to the issue in the Python bindings.

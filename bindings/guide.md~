@@ -58,7 +58,9 @@ and good quality code needs good quality documents and tests to reach its goal.
 
 Backend new features:
 
-There's a [new features](url) notice in this report that will be updated to
+There's an [API news](https://github.com/bigmlcom/io/bindings/news.md) notice
+in this report that will be updated to
 show the features recently added in the API. It will also provide any
 information needed to create the corresponding bindings interface. We will keep
-a [historic record](url) for the latest new features as they are updated.
+a [historic record](https://github.com/bigmlcom/io/bindings/archive/) for the
+latest new features as they are updated.
