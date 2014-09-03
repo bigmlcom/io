@@ -40,14 +40,14 @@ that fulfills only if the field `000002` is missing. If the operator is `\=` or
 
 You can see the main changes in Python bindings (commits
 [6cdee48](https://github.com/bigmlcom/python/commit/6cdee48879272018faa0b1701dc608666e1c3e66)
-and [67213ec](https://github.com/bigmlcom/python/commit/67213ec2fb044a22e3dd6a213088d960b32de71c)
+and [67213ec](https://github.com/bigmlcom/python/commit/67213ec2fb044a22e3dd6a213088d960b32de71c))
 and Node.js bindings (commits
 [57a4e84](https://github.com/bigmlcom/bigml-node/commit/57a4e8425f41a1b5f8e4953518ea7e2f1c278ce5)
-and [1a1090b](https://github.com/bigmlcom/bigml-node/commit/1a1090b9309bc2422b43b0183da4f392e95a0a71).
+and [1a1090b](https://github.com/bigmlcom/bigml-node/commit/1a1090b9309bc2422b43b0183da4f392e95a0a71)).
 
 At the same time, the API has a new argument for the `create` call of models
 and ensembles that can be used to set on or off the use of missing split
-operators. The setting the `missing_splits` argument to `false` will cause
+operators. Setting the `missing_splits` argument to `false` will cause
 the created model to avoid using the new operators. This can be used, for
 instance, to ensure success in test suites made before the new operators
 appearance.
@@ -78,10 +78,10 @@ and manages to fit the training data exactly.  So predictions using the
 training set should be perfect.  Without missing splits, the tree won't fit
 the training data exactly.
 
-Input fields: 0, 1 -- Objective field: 3
-Input fields: 0, 1 -- Objective field: 4
-Input fields: 0, 2 -- Objective field: 3
-Input fields: 0, 2 -- Objective field: 4
+- Input fields: 0, 1 -- Objective field: 3
+- Input fields: 0, 1 -- Objective field: 4
+- Input fields: 0, 2 -- Objective field: 3
+- Input fields: 0, 2 -- Objective field: 4
 
 Bugs
 ====
