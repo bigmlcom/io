@@ -38,10 +38,9 @@ next features to come.
 If you encounter problems or have suggestions for improving the bindings, please fill a bug report in
 [the issue tracker](https://github.com/bigmlcom/io/issues).
 
-### Mailing List
+### Mail contact
 
-Discussions about the different bindings take place in the general 
-[BigML mailing list](http://groups.google.com/group/bigml).
+Email us at [support@bigml.com](mailto:support@bigml.com).
 
 ### Live Chatroom
 
