@@ -1,6 +1,6 @@
 ##API news - September 2014
 
-Previous news: [missing splits](archive/news_201408.md)
+Previous news: [August 2014: missing splits](archive/news_201408.md)
 
 Features
 ========
@@ -34,6 +34,8 @@ score interface must be similar to the model's predictions interface. They need
 an anomaly detector and the input data to be created. You can find an example
 in [commit 0c56bc2](https://github.com/bigmlcom/python/commit/0c56bc2000c40be7102f4ccaa92188397d209345).
 
+Docs describing the new resources and some usage are to be found in [commit 95cde22](https://github.com/mmerce/python/commit/95cde228bbd7e0f016e6a7a8b7ddcbeff3dbda72).
+
 The last step should be creating a local anomaly detector using the JSON for
 the anomaly detector resource, as we have created a local model from the
 model's JSON. This object should have a `score` method to compute anomaly
@@ -45,6 +47,15 @@ iforest structure in our [iforest description](iforest.md).
 
 You can use as example a very small subsample of the
 [kdd dataset](data/tiny_kdd.csv).
+
+The anomaly detectors and anomaly scores are not yet available in our current
+production servers to be tested. They can be found in our
+[ozone](https://ozone.dev.bigml.com) test server that publishes its API
+through [ozone.dev.bigml.io](https://ozone.dev.bigml.io/). The domain used
+in the Python and Node.js bindings can be changed by setting an environment
+variable called `BIGML_DOMAIN`. This variable is not only used for test
+purposes, but it can also be used to redirect to VPCs
+(each VPC has a different `bigml.io` subdomain).
 
 Bugs
 ====
