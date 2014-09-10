@@ -50,12 +50,18 @@ You can use as example a very small subsample of the
 
 The anomaly detectors and anomaly scores are not yet available in our current
 production servers to be tested. They can be found in our
-[ozone](https://ozone.dev.bigml.com) test server that publishes its API
-through [ozone.dev.bigml.io](https://ozone.dev.bigml.io/). The domain used
+[anomaly](https://anomaly.dev.bigml.com/) test server that publishes its API
+through [anomaly.dev.bigml.io](https://anomaly.dev.bigml.io/). 
+
+(Note that the domain used
 in the Python and Node.js bindings can be changed by setting an environment
 variable called `BIGML_DOMAIN`. This variable is not only used for test
-purposes, but it can also be used to redirect to VPCs
-(each VPC has a different `bigml.io` subdomain).
+purposes, but it can also be used to redirect to VPCs, or other specific
+domains)
+
+If you need help setting up an account in this server, please contact us via
+[support@bigml.com](support@bigml.com).
+
 
 Bugs
 ====
