@@ -72,8 +72,9 @@ https://gist.github.com/ashenfad/4c8097ea16d66528b339
 
 To evaluate a single isolation tree, we want to run an instance
 through the tree and output the depth of the node the instance
-terminates at.  The root of the tree is depth 0, its children are
-depth 1, their children depth 2, etc.
+terminates at. We start at depth 0 and the root of the tree
+(when its conditions are met) is depth 1, its children are
+depth 2, their children depth 3, etc.
 
 If a node has any children whose predicates are all true given the
 instance, then the instance will flow through that child.  If the node
