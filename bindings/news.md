@@ -63,6 +63,79 @@ If you need help setting up an account in this server, please contact us via
 [support@bigml.com](support@bigml.com).
 
 
+Local anomaly detector and anomaly score
+----------------------------------------
+
+*Affects:* Previously existing `Predicate` object and new objects to be
+created (`Predicates`, `AnomalyTree` --resembling `Tree`-- and `Anomaly`
+--resembling `Model`--)
+
+*Description:* The goal is to download the JSON `anomaly` resource and build
+an `Anomaly` object that provides a method to produce the scoring of new
+input data locally. As described in our [iforest description](iforest.md),
+the JSON contains an `object` key where you can find the following information
+used in the scoring method:
+
+    anomaly['object']['sample_size']
+    anomaly['object']['model']['mean_depth']
+    anomaly['object']['model']['trees']
+
+The last property is a list of tree dicts, each of which has a `['root']` key
+where the entire tree structure is stored. In our python implementation, our
+`Anomaly` object has an `iforest` attribute where the trees are stored in a
+list as `AnomalyTree` objects. The `AnomalyTree` object is similar to the
+`Tree` object used in the local model construction. The main difference is
+that each `Tree` object has a predicate attribute where a `Predicate` object
+is stored. `Predicate` contains the last rule that
+the node represented by the `Tree` instance fulfills. In the `AnomalyTree`
+object, the instances in the node must fulfill the list of predicates that
+you will find in the `predicates` key. For instance, a node
+defined by
+
+    {'population': 105,
+     'predicates': [   {   'field': '000017',
+                           'op': '<=',
+                           'value': 13.21754},
+                       {   'field': '000009',
+                           'op': 'in',
+                           'value': [   '0']}]}],
+      'children': [ ... ]}
+
+where the instances in the node fulfill that field `000017`'s value is equal
+or less than `13.21754` and the value of field `000009` is in the list of
+values `['0']` would be represented by an `AnomalyTree` with a `predicates`
+attribute containing a `Predicates` object that stores the list of two
+`Predicate` objects built on the dicts of the `predicates` key.
+
+The existing `Predicate` object has also been modified to include the new
+`in` operator that you can see in the second rule of our previous example.
+
+Based on such a structure, the local computation of the anomaly score for
+a given input data involves computing:
+
+- The maximum depth that input data reaches when run through each `AnomalyTree`
+- The values of `anomaly['object']['sample_size']` and
+  `anomaly['object']['model']['mean_depth']`
+
+Combining the list of depths, the number of `AnomalyTrees` and the
+`sample_size` and `mean_depth` as explained in the
+[iforest description](iforest.md) or in the python
+[commit f5d56f5](https://github.com/bigmlcom/python/commit/f5d56f58e7fe1524e83f61f7be6dfe517b9069df)
+you obtain the anomaly score for the given input data.
+
+
+*Test samples:*
+
+No specific test samples are provided, because the best way of testing local
+anomaly objects is comparing the obtained local scores obtained with them in
+any anomaly detector you build, regardless of the dataset, to
+the ones obtained calling the API using the corresponding
+`create_anomaly_score` function. You can also check the anomaly detector
+scoring method by
+using the `top_anomalies` information, that contains both the fields' value
+of the anomalies and the scores computed remotely for these instances.
+
+
 Bugs
 ====
 
