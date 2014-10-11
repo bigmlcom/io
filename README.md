@@ -21,6 +21,7 @@ We have also open-sourced some general-purpose libraries:
 
 - [Histogram](https://github.com/bigmlcom/histogram), Java and Clojure libraries to create any-time histograms from streaming data 
 - [Sampling](https://github.com/bigmlcom/sampling), a Clojure library for sampling arbitrarily sized sequences
+- [Sketchy](https://github.com/bigmlcom/sketchy], Sketching algorithms for Clojure 
 - Our [closchema fork](https://github.com/bigmlcom/closchema), to validate JSON documents using JSON schemas
 
 ## Support
