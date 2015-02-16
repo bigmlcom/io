@@ -44,3 +44,30 @@ The python example for the REST calls for `projects` can be found in
 
 There are no test samples for projects, because they don't rely on any
 existing data or resources to be created.
+
+Samples
+--------
+
+*Affects:* REST API calls
+
+*Description:* A new kind of resource (`sample`) has been added to BigML.
+The `sample` is an in-memory object that is available for queries to obtain
+subsets of the data in a dataset. The queries can filter the size, fields
+or rows of the dataset.
+
+There should be REST api calls to create, get, update and delete them.
+The `create` method needs a dataset object or id as origin and returns a
+sample object that will follow the usual status workflow until finished.
+The sample id will be something like `sample/50c0de043b56351983000152`.
+
+A singularity of samples is that they are automatically deleted once a certain
+time to live expires. The time to live is updated every time a new GET call is
+done on the sample.
+
+The python example for the REST calls for `samples` can be found in
+[commit f983766](https://github.com/mmerce/python/commit/f983766208c944fd0169e06e8352dbeb96f0d38a).
+
+*Test samples:*
+
+For samples, any dataset can be a good candidate to try them, so we include
+no particular data file for that.
