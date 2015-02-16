@@ -70,3 +70,5 @@ show the features recently added in the API. It will also provide any
 information needed to create the corresponding bindings interface. We will keep
 a [historic record](archive/) for the
 latest new features as they are updated.
+We keep a record of the development level of each binding in
+a [shared spreadsheet](https://docs.google.com/a/bigml.com/spreadsheets/d/1MX3nlAGmesoMrilFfChymNfPSZUhOx0pRinx6w5A5I0/edit#gid=107212223).
