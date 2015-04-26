@@ -26,6 +26,11 @@ Basic functions:
     - Clusters
     - Centroids
     - Batch Centroids
+    - Anomaly Detectors
+    - Anomaly Scores
+    - Batch Anomaly Scores
+    - Projects
+    - Samples
 
   You can learn about the properties of these resources and the API calls'
   arguments in the [developers section](https://bigml.com/developers) of
@@ -37,7 +42,8 @@ Advanced functions:
   predictions in a csv format. Some bindings provide methods to download
   such files.
 
-- Local models, ensembles and clusters: BigML's predictive models can be
+- Local models, ensembles, clusters and anomaly detectors:
+  BigML's predictive models can be
   downloaded as JSON structures. Bindings can provide objects built on this
   JSON which are able to produce local predictions.
 
@@ -64,3 +70,5 @@ show the features recently added in the API. It will also provide any
 information needed to create the corresponding bindings interface. We will keep
 a [historic record](archive/) for the
 latest new features as they are updated.
+We keep a record of the development level of each binding in
+a [shared spreadsheet](https://docs.google.com/a/bigml.com/spreadsheets/d/1MX3nlAGmesoMrilFfChymNfPSZUhOx0pRinx6w5A5I0/edit#gid=107212223).
