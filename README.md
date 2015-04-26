@@ -1,9 +1,8 @@
 # BigML.io
 
 The following Github repositories contain libraries and examples using
-BigML's API to create and use datasources, 
-datasets, models, evaluations and predictions
-programmatically:
+BigML's API to create and use datasources, datasets, models,
+evaluations and predictions programmatically:
 
 
 - [Python bindings](https://github.com/bigmlcom/python)
@@ -19,9 +18,9 @@ programmatically:
 
 We have also open-sourced some general-purpose libraries:
 
-- [Histogram](https://github.com/bigmlcom/histogram), Java and Clojure libraries to create any-time histograms from streaming data 
+- [Histogram](https://github.com/bigmlcom/histogram), Java and Clojure libraries to create any-time histograms from streaming data
 - [Sampling](https://github.com/bigmlcom/sampling), a Clojure library for sampling arbitrarily sized sequences
-- [Sketchy](https://github.com/bigmlcom/sketchy), Sketching algorithms for Clojure 
+- [Sketchy](https://github.com/bigmlcom/sketchy), Sketching algorithms for Clojure
 - Our [closchema fork](https://github.com/bigmlcom/closchema), to validate JSON documents using JSON schemas
 
 ## Support
@@ -29,21 +28,25 @@ We have also open-sourced some general-purpose libraries:
 ### Bindings' developers news
 
 If you want to contribute to the bindings, the
-[bindings' developers guide](bindings/guide.md)
-or [API news](bindings/news.md) can help you to
-be informed about
-next features to come.
+[bindings' developers guide](bindings/guide.md) or
+[API news](bindings/news.md) can help you to be informed about next
+features to come.
 
 ### Bug Reporting
 
-If you encounter problems or have suggestions for improving the bindings, please fill a bug report in
-[the issue tracker](https://github.com/bigmlcom/io/issues).
+If you encounter problems or have suggestions for improving the
+bindings, please fill a bug report in the issue trackers of the
+corresponding binding.
 
-### Mail contact
 
-Email us at [support@bigml.com](mailto:support@bigml.com).
+### Forum and mail contact
+
+For questions and discussion on our bindings, please check our or
+[BigML forum and mailing list](https://groups.google.com/forum/#!forum/bigml)
+or contact us directly at
+[support@bigml.com](mailto:support@bigml.com).
+
 
 ### Live Chatroom
 
 Join us in our [Campfire chatroom](https://bigmlinc.campfirenow.com/f20a0).
-
