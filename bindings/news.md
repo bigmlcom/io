@@ -37,7 +37,7 @@ might take some time to disappear completely from the resources lists.
 For instance, if you send two consecutive
 delete calls on the same project, both can return the same `204` code.
 
-The python example for the REST calls for `projects` can be found in 
+The python example for the REST calls for `projects` can be found in
 [commit 9bb710f](https://github.com/bigmlcom/python/commit/9bb710f80460fadd7a0b4e21a48af53753140892).
 
 *Test samples:*
@@ -71,3 +71,18 @@ The python example for the REST calls for `samples` can be found in
 
 For samples, any dataset can be a good candidate to try them, so we include
 no particular data file for that.
+
+
+Bugs
+====
+
+An implementation bug has been detected both in the Python and Node.js old
+version of the bindings. It applies only to the local anomaly detector objects
+when `id_fields` are used. The fields in the `id_fields` array are only used
+as reference, not in the iforest models, and their values do not appear in
+the `row` attribute of the `top_anomalies`. The old code used
+`input_fields`, included the `id_fields` if any. It also corrects
+that double quotes should be escaped if they appear in values of categorical
+fields. You can check commit
+[b879a24](https://github.com/bigmlcom/python/commit/b879a243bf30f8ee8efed9d3150f1358e34bf405)
+for a solution to the issue in the Python bindings.
