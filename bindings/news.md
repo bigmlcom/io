@@ -21,8 +21,8 @@ predictors of the dataset to compute the probability associated to
 each possible category in the objective field. The probability is the
 value of a logistic function of the form,
 
-p = 1 / (1 + exp[-(b<sub>1</sub>*x<sub>1</sub> + b<sub>2</sub>*x<sub>2</sub>
-... + b<sub>n</sub>*x<sub>n</sub> + b<sub>missing</sub> + b<sub>0</sub>)])
+p = 1 / (1 + exp[-(b<sub>1</sub> * x<sub>1</sub> + b<sub>2</sub> * x<sub>2</sub>
+... + b<sub>n</sub> * x<sub>n</sub> + b<sub>missing</sub> + b<sub>0</sub>)])
 
 which linearly combines the values in the
 input_data fields using some coefficients (please, see more details in the
@@ -51,7 +51,7 @@ dataset to create, update and delete a `logisticregression` resource. The
 `data/spam.csv` sample is also used to test the local Logistic Regression
 object (see next section)
 
-<a name="#localogisticregression"></a>
+<a name="localogisticregression"></a>
 Local Logistic Regression
 -------------------------
 
