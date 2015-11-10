@@ -51,7 +51,7 @@ dataset to create, update and delete a `logisticregression` resource. The
 `data/spam.csv` sample is also used to test the local Logistic Regression
 object (see next section)
 
-<a name="localogisticregression"></a>
+<a name="locallogisticregression"></a>
 Local Logistic Regression
 -------------------------
 
