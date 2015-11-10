@@ -31,6 +31,9 @@ Basic functions:
     - Batch Anomaly Scores
     - Projects
     - Samples
+    - Correlations
+    - Statistical Tests
+    - Logistic Regressions
 
   You can learn about the properties of these resources and the API calls'
   arguments in the [developers section](https://bigml.com/developers) of
@@ -45,13 +48,15 @@ Advanced functions:
 - Local models, ensembles, clusters and anomaly detectors:
   BigML's predictive models can be
   downloaded as JSON structures. Bindings can provide objects built on this
-  JSON which are able to produce local predictions.
+  JSON which are able to produce local predictions, centroids or anomaly
+  scores.
 
 - Fields utilities: Bindings can provide utilities that help listing, or
   extracting specfic field information from the corresponding attribute in each
   resource's JSON.
 
-The Python and Node.js bindings are maintained by BigML's team and are usually
+The Python, Node.js, Java, C#, iOS, Clojure bindings are maintained by
+BigML's team and are usually. Usually, Python and Node.js are
 updated to offer the latest added features. They can be used as reference in
 new bindings development.
 
