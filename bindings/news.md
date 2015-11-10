@@ -80,8 +80,8 @@ For a use case where the rest of fields in the dataset
 are numeric fields (like `iris.csv`), the structure of the coefficients
 array would be:
 
-[['category1' [b<sub>1</sub>, b<sub>2</sub>,... , b<sub>n</sub>, b<sub>0</sub>],
- ['category2' [b<sub>1</sub>, b<sub>2</sub>,... , b<sub>n</sub>, b<sub>0</sub>],
+[['category1', [b<sub>1</sub>, b<sub>2</sub>,... , b<sub>n</sub>, b<sub>0</sub>],
+ ['category2', [b<sub>1</sub>, b<sub>2</sub>,... , b<sub>n</sub>, b<sub>0</sub>],
 ...]
 
 where the first element in the pair is the category and the second is the
