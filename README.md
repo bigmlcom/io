@@ -13,8 +13,9 @@ evaluations and predictions programmatically:
 - [R bindings](https://github.com/bigmlcom/bigml-r)
 - [Bash bindings](https://github.com/bigmlcom/bigml-bash)
 - [Ruby bindings](http://vigosan.github.com/big_ml/)
-- [Java bindings](https://github.com/javinp/bigml-java)
-- [ML4iOS, iOS bindings](https://github.com/fgarcialainez/ML4iOS)
+- [Java bindings](https://github.com/bigmlcom/bigml-java)
+- [ML4iOS, iOS bindings](https://github.com/bigmlcom/ml4ios)
+- [Swifth](https://github.com/bigmlcom/bigml-swift)
 
 We have also open-sourced some general-purpose libraries:
 
