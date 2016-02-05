@@ -93,3 +93,79 @@ occurrences are computed and significant to the prediction algorithm).
 *Test samples:*
 
 We can test items fields using the `data/movies.csv` sample file.
+
+
+Associations
+------------
+
+*Affects:* REST API calls
+
+*Description:* A new kind of resource (`association`) has been
+added to BigML. It is meant to bring association discovery to the set
+of tools to find out relations among values
+in high-dimensional datasets.
+
+In BigML, the Association resource object can be built from any dataset, and
+its results are a list of association rules between the items in the dataset.
+There are some metrics to ponder the quality of these association rules:
+support, coverage, confidence, leverage and lift. Check the
+[developers section](https://bigml.com/developers/associations) for more
+detailed information.
+
+The basics will be creating wrappers for the
+REST api calls to create, get, update and delete associations. Their
+structure will be similar to the `cluster` CRUD calls. Associations
+have a private resource id and can also be shared.
+
+The information it returns, encloses an `associations` block
+that contains the fields structure and also contains an `items`
+attribute, which lists all the items considered. Items are based on categories
+for categorical fields, terms for text fields and items for items fields.
+Numeric fields are discretized in ranges. See the `items object` properties
+in [association properties](https://bigml.com/developers/associations#ad_association_properties).
+It also includes a `rules` attribute that lists the association rules that
+relate these items. Each association has a set of items as antecendents
+in the left-hand-side (lhs) of the rule and an item or consequent in the
+right-hand-side (rhs) of the rule. See the `rules object` section in
+[association properties](https://bigml.com/developers/associations#ad_association_properties).
+
+The python example for the REST calls for `associations` can be found in
+[commit 62050f0](https://github.com/bigmlcom/python/commit/62050f0a3b377fefec1d51b1f035ae76df1d3ae1).
+
+*Test samples:*
+
+We use the `data/iris.csv` sample file or the `data/tiny_mushrooms.csv`
+to build a dataset and use this
+dataset to create, update and delete an `association` resource.
+
+<a name="local-associations"></a>
+
+Local Associations
+------------------
+
+*Affects:* Its a new object that encapsulates the JSON information downloaded
+from a remote `association` resource and adds methods to retrieve and filter
+- the list of items in the association relations
+- the list of association rules
+It also provides methods to export these rules to a CSV and generate a
+printable summary of them.
+
+*Description:* The local association object will encapsulate the
+information found in the `associations` attribute of the resource
+JSON, namely the `search_strategy`, `complement`, `discretization`,
+`fields_discretization`, `k`, `prune`, `significance_level` and the
+`items` and `rules` lists (see the
+[developers documentation](https://bigml.com/developers/associations#ad_association_properties)
+for extensive details).
+
+Currently, there's no `predict` method associated to this object but it's
+expected to be added in a short-medium term. The predictions of `associations`
+are `association sets`.
+
+The Python bindings implementation can be found in
+[association.py](https://github.com/bigmlcom/python/blob/master/bigml/association.py).
+
+*Test samples:*
+
+We can test the categorical and numeric fields using the `data/iris.csv` sample
+and other fields with the `data/movies.csv` sample file.
