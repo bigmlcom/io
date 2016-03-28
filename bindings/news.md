@@ -117,7 +117,7 @@ REST api calls to create, get, update and delete associations. Their
 structure will be similar to the `cluster` CRUD calls. Associations
 have a private resource id and can also be shared.
 
-The information it returns, encloses an `associations` block
+The information they return, encloses an `associations` block
 that contains the fields structure and also contains an `items`
 attribute, which lists all the items considered. Items are based on categories
 for categorical fields, terms for text fields and items for items fields.
