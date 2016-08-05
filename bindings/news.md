@@ -22,7 +22,7 @@ for extensive details).
 Several attributes have been added to the last existing version of
 logistic regression. The attributes `balance_fields` and `field_codings` are
 the most important ones. In addition to that, the coefficients array
-has been changed too. All of these changes affect the `predict` method:
+has been changed. All of these changes affect the `predict` method:
 
 1. Coefficients are restructured. The new syntax is an array of arrays. Each
    nested array corresponds to the group of coefficients related to a single
@@ -31,27 +31,26 @@ has been changed too. All of these changes affect the `predict` method:
    each group are:
 
 - for numeric fields, one coefficient if `missing_numerics` is `false` and
-  two if otherwise (the second one is used when the field is missing).
+  two otherwise (the second one is used when the field is missing).
 - for categorical fields, if no `field_codings` is used (please, see the
-  the next change for details about this) `n + 1` where `n` is the number
+  next change for details about this) `n + 1` where `n` is the number
   of categories
   found in the summary of the categorical field. The coefficients will be
   sorted according to the list of categories in the summary
   plus a last coefficient used when the field is missing.
 - for text or items fields, `n + 1` where `n` is the number of terms in the
-  tag_cloud or items list respectively. The coefficients will be sorted
-  according to the list of terms in the tag_cloud/items
+  `tag_cloud` or `items` list respectively. The coefficients will be sorted
+  according to the list of terms in the `tag_cloud`/`items`
   plus a last coefficient used when
   the field is missing.
 
-A last array which contains a single coefficient is added at the end of the
+A final array which contains a single coefficient is added at the end of the
 rest of groups. This is the bias coefficient.
 
 2. Several coding schemes can be used for categorical fields. They change
    the amount in which each category contributes to the logistic function.
-   The one by
-   default is `one-shot`, where each category is considered as an individual
-   component and assigned a factor of 1
+   The default one is `one-shot`, where each category is considered
+   as an individual component and assigned a factor of 1
    as described
    in the previous paragraph. Thus, the logistic function is computed
    assigning one coefficient to one
@@ -69,7 +68,7 @@ rest of groups. This is the bias coefficient.
          which describes this contribution.
          Thus, for a categorical
          field with 4 categories and two vectors (e.g.
-         `[[0.5, 0.5, -0.5, -0.5], [1, -1, 1, -1]]) the number of coefficients
+         `[[0.5, 0.5, -0.5, -0.5], [1, -1, 1, -1]]`) the number of coefficients
          will be 3 (2 coefficients, one per vector and 1 used when
          the field is missing).
     2.3. `other`: this scheme has the same structure as `contrast`, the only
@@ -93,9 +92,10 @@ For more details on coding schemes, you can check the
    is set to `true`, the contributions of input data must
    be normalized. The norm is computed as the usual square root of the
    scalar product of a vector formed with the input data values.
-   Note that this vector includes also a 1 component every time a field
+   Note that this vector includes also a component with value 1
+   every time a field
    is missing (is the factor which multiplies the missing coefficient). It
-   also includes a 1 component when bias is set.
+   also includes a 1 when bias is set.
 
 Another important thing to note is that ties in probabilites
 are broken according to the order in which the
