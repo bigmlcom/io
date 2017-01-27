@@ -1,111 +1,72 @@
-##API news - August 2016
+##API news - December 2016
 
-Previous news: [March 2015: Logistic Regression Changes](archive/news_201603.md)
+Previous news: [August 2016: Logistic Regression Changes](archive/news_201608.md)
 
 Features
 ========
 
-Local Logistic Regression Changes
----------------------------------
+Topic Model, Topic Distribution, Batch Topic Distribution
+---------------------------------------------------------
 
-*Affects:* The object built to handle local predictions based on the
-remote `logisticregression` resource. The `LogisticRegression` object in
-Python bindings.
+*Affects:* REST API calls
 
-*Description:* The local logistic regression object encapsulates the
-information found in the `logistic_regression` attribute of the resource
-JSON, namely the `bias`, `c`, `eps`, `lr_normalize`, `regularization`and the
-`coefficients` structure (see the
-[developers documentation](https://bigml.com/developers/logisticregressions#lr_retrieving_a_logistic_regression)
-for extensive details).
+*Description:* New kinds of resources (`topicmodel`, `topicdistribution`,
+`batchtopicdistribution`) have been
+added to BigML.
 
-Several attributes have been added to the last existing version of
-logistic regression. The attributes `balance_fields` and `field_codings` are
-the most important ones. In addition to that, the coefficients array
-has been changed. All of these changes affect the `predict` method:
+The `topicmodel` is a kind of unsupervised machine learning method
+which uses `LDA (Latent Dirichlet Allocation)` to extract the
+topics contained in a collection of documents. The BigML `topicmodel`
+is built considering each row in your dataset as a document and its text
+fields contents as the document's text. If multiple fields are given as
+inputs, they will be automatically concatenated and the content will be
+considered as a bag of words.
 
-1. Coefficients are restructured. The new syntax is an array of arrays. Each
-   nested array corresponds to the group of coefficients related to a single
-   input field. The nested arrays are sorted according to the order of the
-   fields in the `input_fields` attribute. Internally, the coefficients of
-   each group are:
+When input data is run through a `topicmodel`, the generated resource is
+a `topicdistribution`. The `topicdistribution` resource
+shows in a list the probability that the given input_data belongs to each
+of its topics. To create a `topicdistribution` you need a topicmodel/id
+and the input data.
 
-- for numeric fields, one coefficient if `missing_numerics` is `false` and
-  two otherwise (the second one is used when the field is missing).
-- for categorical fields, if no `field_codings` is used (please, see the
-  next change for details about this) `n + 1` where `n` is the number
-  of categories
-  found in the summary of the categorical field. The coefficients will be
-  sorted according to the list of categories in the summary
-  plus a last coefficient used when the field is missing.
-- for text or items fields, `n + 1` where `n` is the number of terms in the
-  `tag_cloud` or `items` list respectively. The coefficients will be sorted
-  according to the list of terms in the `tag_cloud`/`items`
-  plus a last coefficient used when
-  the field is missing.
+A `batchtopicdistribution` will compute a topic distribution
+for each instance in a dataset in only one request.
+To create a new batch topic distribution you need a topicmodel/id and a
+dataset/id.
 
-A final array which contains a single coefficient is added at the end of the
-rest of groups. This is the bias coefficient.
+The basics will be creating wrappers for the
+REST api calls to create, get, update and delete each of these resources.
 
-2. Several coding schemes can be used for categorical fields. They change
-   the amount in which each category contributes to the logistic function.
-   The default one is `one-shot`, where each category is considered
-   as an individual component and assigned a factor of 1
-   as described
-   in the previous paragraph. Thus, the logistic function is computed
-   assigning one coefficient to one
-   category, and then the number of coefficients for a
-   categorical field is `n + 1` where `n` is the number of categories.
-   Using the `field_codings` attribute, you can set other coding schemes:
-    2.1. `dummy`: One of the categories is considered a `dummy_class`, so the
-          coefficients will be like the ones in `one-shot` but
-          their number is `n` because this category does not contribute
-          to the logistic function computation.
-    2.2. `contrast`: The categories are combined to form vectors of categories.
-         The logistic function assigns a coefficient per vector. To define
-         how much does each category contribute to each vector, the associated
-        `field_codings` entry has a `coefficients` attribute
-         which describes this contribution.
-         Thus, for a categorical
-         field with 4 categories and two vectors (e.g.
-         `[[0.5, 0.5, -0.5, -0.5], [1, -1, 1, -1]]`) the number of coefficients
-         will be 3 (2 coefficients, one per vector and 1 used when
-         the field is missing).
-    2.3. `other`: this scheme has the same structure as `contrast`, the only
-         difference being the restrictions imposed on the vectors'
-         coefficients.
 
-For more details on coding schemes, you can check the
-`coding categorical fields` subsection of
-[API developers docs](https://labs.dev.bigml.com/developers/logisticregressions#lr_logistic_regression_arguments).
+The python example for the REST calls for `topicmodel`, `topicdistribution`,
+`batchtopicdistribution` can be found in
 
-3. A new attribute called `balance_fields` controls the numeric fields
-   contribution to
-   the logistic function. If set to `true`, the value of each numeric field
-   in your input data must be balanced by substracting the mean and dividing
-   by the standard deviation (both values can be found
-   in the `summary` of the field in the `fields` attribute)
-   before being multiplied by the logistic regression coefficients to compute
-   probabilities.
-
-4. When `lr_normalize` (`normalize` in the JSON sctructure)
-   is set to `true`, the contributions of input data must
-   be normalized. The norm is computed as the usual square root of the
-   scalar product of a vector formed with the input data values.
-   Note that this vector includes also a component with value 1
-   every time a field
-   is missing (is the factor which multiplies the missing coefficient). It
-   also includes a 1 when bias is set.
-
-Another important thing to note is that ties in probabilites
-are broken according to the order in which the
-classes appear in the objective field summary.
-
-The Python bindings implementation can be found in
-[logistic.py](https://github.com/bigmlcom/python/blob/master/bigml/logistic.py).
+- [topicmodel](https://github.com/bigmlcom/python/blob/next/bigml/topicmodelhandler.py).
+- [topicdistribution](https://github.com/bigmlcom/python/blob/next/bigml/topicdistributionhandler.py).
+- [batchtopicdistribution](https://github.com/bigmlcom/python/blob/next/bigml/batchtopicdistributionhandler.py).
 
 *Test samples:*
 
-As this computation has different implications for numeric, categorical and
-text / items fields, we recommend that you test it on a varied dataset,
-such as the `data/movies.csv`.
+We use the `data/spam.csv` sample file to build a dataset and use this
+dataset to create, update and delete a `topicmodel` resource and their related
+`topicdistribution` and `batchtopicdistribution` resources.
+
+<a name="localtopicmodel"></a>
+Local Topic Model
+-----------------
+
+*Affects:* It's a new object that encapsulates the JSON information downloaded
+from a remote `topicmodel` resource and adds a `distribution` method
+to create topic distributions locally. Similar to the `Model` object in Python
+bindings.
+
+*Description:* The local topic model object will encapsulate the
+information found in the `topic_model` attribute of the resource
+JSON needed to compute the topic distributions. The python example for the
+local topic model can be found in:
+
+- [local topic model](https://github.com/bigmlcom/python/blob/next/bigml/topicmodel.py)
+
+
+*Test samples:*
+
+We can test the local topic model using the `data/sample.csv` sample file.
