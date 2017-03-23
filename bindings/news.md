@@ -56,11 +56,11 @@ Note that these models won't store `distribution` informations in their nodes.
 Thus, a new class is used to substitute the `Tree` class used by the existing
 `Model` class. The `BoostedTree` python class, that can be found in:
 
-[BoostedTree](https://github.com/mmerce/python/blob/boosted/bigml/boostedtree.py)
+[BoostedTree](https://github.com/bigmlcom/python/blob/boosted/bigml/boostedtree.py)
 
 and is used in the `Model` instantiation:
 
-[Model](https://github.com/mmerce/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-95c7cbead76744330bc93b197b3d14e9)
+[Model](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-95c7cbead76744330bc93b197b3d14e9)
 
 The `BoostedTree`  class will provide a `predict` method. The usual
 missing strategies
@@ -94,21 +94,22 @@ The final ensemble prediction will be computed by following these rules:
   by adding the product of `(- sum(g_sum) / (sum(h_sum) + lambda)) * weight`
   for each model associated to this category in the ensemble. The final
   prediction
-  is the most probable category. To decide in case of tie break the
+  is the most probable category. The `softmax` function is
+  used to normalize these probabilities. To decide in case of tie break the
   order of categories
   in the ensemble objective field summary is used.
   This has caused the `Ensemble`
   to include also the fields structure.
 
-[Ensemble](https://github.com/mmerce/python/blob/boosted/bigml/ensemble.py)
+[Ensemble](https://github.com/bigmlcom/python/blob/boosted/bigml/ensemble.py)
 
 The information of `weight` and `class` is added to each prediction in the
 `MultiModel` class:
-[MultiModel](https://github.com/mmerce/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-21ed79c5ab53d55f5e4f79a211d6875f)
+[MultiModel](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-21ed79c5ab53d55f5e4f79a211d6875f)
 
 The implementation of these sums and normalizations is done
 in the `MultiVote` class.
-[MultiVote](https://github.com/mmerce/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-90180690cbb5b54d110f92b01c9e3878)
+[MultiVote](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-90180690cbb5b54d110f92b01c9e3878)
 
 We choose to add a `BOOSTING = -1` code in the `MultiVote` class to mean
 that boosting combiner is used. The code is set to a negative to allow that
