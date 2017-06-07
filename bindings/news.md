@@ -73,7 +73,8 @@ missing strategies
   the acumulated `g_sum` and `h_sum` for all the nodes whose conditions are
   met by the input data.
 
-The final ensemble prediction will be computed by following these rules:
+The final ensemble prediction will be computed by following these rules (note:
+see next section for the correction added in june 2017, after the release):
 
 - Regression with last prediction missing strategy: The prediction is computed by
   adding the product of `prediction * weight` for each model in the ensemble.
@@ -120,3 +121,27 @@ correlative integers.
 
 We use the `data/iris.csv` and `data/grades.csv` sample files to
 build a boosted ensemble and use it in a local `Ensemble`.
+
+Correction to the boosted ensembles
+-----------------------------------
+
+*Affects:* The local `Ensemble` class, and the
+`MultiVote` class.
+
+*Description:* The boosted ensembles add two properties: `initial_offset` and
+`initial_offsets`. The first one applies to regressions and contains a real
+value and the second one to
+classifications and contains a map from each objective field class to the
+associated real values. These values are quantities that need to be added to
+the model's predictions to compute the final ensemble prediction. Thus,
+each model's prediction is computed as explained in the previous section,
+but the final ensemble prediction is
+
+for regressions:
+    - Add the local model weighted predictions
+    - Add the `initial_offset`
+
+for classifications, per each category:
+    - Add all the local model weighted predictions for the category models
+    - Add the `initial_offsets[category]` value
+    - normalize using `softmax`
