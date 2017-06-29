@@ -35,6 +35,11 @@ Basic functions:
     - Statistical Tests
     - Logistic Regressions
     - Associations
+    - Topic Models
+    - Topic Distributions
+    - Time Series
+    - Forecasts
+
 
   You can learn about the properties of these resources and the API calls'
   arguments in the [developers section](https://bigml.com/developers) of

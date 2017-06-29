@@ -1,147 +1,141 @@
-##API news - February 2017
+##API news - June 2017
 
-Previous news: [December 2016: Logistic Regression Changes](archive/news_201612.md)
+Previous news: [February 2017: Boosted ensembles](archive/news_201702.md)
 
 Features
 ========
+Time-series and Forecasts
+-------------------------
 
-Local boosted ensembles
------------------------
+*Affects:* REST API calls
 
-*Affects:* The local `Ensemble` class, the local `Model` class, the
-`MultiModel` and `MultiVote` classes and adds a new `BoostedTree` class.
+*Description:* New kinds of resources (`timeseries` and `forecast`) have been
+added to BigML.
 
-*Description:* A new kind of ensemble is available to predict classifications
-and regressions. The ensemble uses a boosting algorithm which computes the
-predictions using several interations. In each iteration a new set of models
-is build whose objective is computing a gradient that leads to the final model.
-Thus, in this case there are several differences when compared to the
-`random decision forests` or `bagging` ensembles:
+The `timeseries` is a kind of supervised machine learning method
+which uses `exponential smoothing` to analize a temporal numeric series.
+By default, a handful of models is built when analyzing a time-series.
+The parameters
+that define these models are:
 
-- All the models have a numeric objective field (the gradient)
-  regardless of whether the original objective field is a numeric or
-  categorical one.
-- When used for regression, the prediction of the ensemble
-  will be computed by adding up (with some
-  weights and normalizations) the predictions of all the models.
-  The result of the ensemble
-  prediction will be a number and will have no associated error.
-- When used for classification, each model will be associated to one of the
-  categories. The list of models asociated to a particular category will
-  be used to predict the probability of the category given the input data.
-  Again, the prediction per category will be computed by adding up (with some
-  weights and normalizations) the contributions of its associated models. The
-  result of the ensemble prediction will be the most probable category and its
-  confidence will be the associated probability.
+- the error type (additive -A- or multiplicative -M-)
+- the trend type (none -N- , additive -A- or multiplicative -M-)
+- the trend damping, only applicable to additive or multiplicative trends (true, false)
+- the seasonal type (none -N-, additive -A- or multiplicative -M-)
 
-The ensemble JSON constains a `type` attribute which must be used to
-decide whether the ensemble is a `Decision Forest` (bagging or Random
-Decision Forest) or a `Boosted Trees` ensemble (`type=1`). If your binding
-supports local ensembles from lists of models, you will also need to decide
-whether the models in the list are boosted trees. In order to do so, look
-for the `boosted_ensemble` attribute in the models, which is a boolean
-telling whether the models belong to a boosted trees ensemble.
+according to this types, the models are labeled using the letters that
+describe the error, the trend (a "d" is appended if using damping) and the
+seasonal type. For instance, the model with additive error, multiplicative
+damped trend and no seasonal type is named "A,Md,N".
 
-The computation of predictions for boosted ensembles uses some information
-stored in the structure of their associated trees, besides the output
-predicted in each node:
+The `forecast` resource is the predicted output for a series of points
+as computed using the `timeseries` model. It expects as input the
+`timeseries` object or resource ID and some `input_data`. The `input_data`
+format should be a map whose keys are the objective field IDs whose predictions
+will be computed. The value of this map will contain:
 
-- `weight` is an attribute of each model (at the model level)
-  that contains the weight that will
-  be used when adding the model's contribution.
-- `lambda` is an attribute of each model (one of the `boosting` attributes)
-- `g_sum` and `h_sum` are attributes stored in each node of the models.
+- `horizon`: an integer setting the total of points that will be computed
+- `submodels`: (optional) map that specify the submodels to be used when
+               computing the  forecast.
 
-Note that these models won't store `distribution` informations in their nodes.
-Thus, a new class is used to substitute the `Tree` class used by the existing
-`Model` class. The `BoostedTree` python class, that can be found in:
+The submodels map structure can have the following keys:
+- `indices`: that will contains a list of the indices of the
+ `times_series['submodels']` array.
+- `names`: that will contain a list of names in the above-mentioned format
+- `criterion`: that can be one of the ones available `aic`, `aicc`, and `bic`
+  properties in each submodel.
+- `limit`: a positive integer which will set the maximum number of results
+  returned.
 
-[BoostedTree](https://github.com/bigmlcom/python/blob/boosted/bigml/boostedtree.py)
+The submodels returned by selecting by `indices` and `names` will be merged,
+and if none is present, then all models in the `timeseries` will be used. After
+that, the `criterion` will be used to sort them and the `limit` to truncate
+the results.
 
-and is used in the `Model` instantiation:
+An example of `input_data` would be:
 
-[Model](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-95c7cbead76744330bc93b197b3d14e9)
+{"000005": {"horizon": 10,
+            "submodels":{
+                "indices": [2,5],
+                "names": ["A,N,N", "M,N,N"],
+                "criterion": "aic",
+                "limit": 2}}}
 
-The `BoostedTree`  class will provide a `predict` method. The usual
-missing strategies
-(LAST_PREDICTION and PROPORTIONAL) are to be allowed.
+Which would select the submodels in position 2 and 5 in the submodels list,
+add the ones named "A,N,N" and "M,N,N", sort them by `aic` and return the
+point forecast (of 10 new points) for the first two.
 
-- LAST_PREDICTION: When using this strategy we'll need to return the
-  information of the last node whose condition is met by the input data.
-
-- PORPORTIONAL: When using this strategy we'll need to return
-  the acumulated `g_sum` and `h_sum` for all the nodes whose conditions are
-  met by the input data.
-
-The final ensemble prediction will be computed by following these rules (note:
-see next section for the correction added in june 2017, after the release):
-
-- Regression with last prediction missing strategy: The prediction is computed by
-  adding the product of `prediction * weight` for each model in the ensemble.
-
-- Classification with last prediction missing strategy: A probability is
-  computed for each possible category by selecting the models associated to
-  this category
-  and computing the sum of products (`prediction * weight`) for them. Once you
-  have this quantities computed per each category, you normalize them using the
-  `softmax` function.
-
-- Regression with proportional missing strategy: the prediction is computed by
-  adding the product of `(- sum(g_sum) / (sum(h_sum) + lambda)) * weight` for
-  each model in the ensemble. `lambda` is one of the attributes in the model.
-
-- Classification with proportional missing strategy: the probability of each
-  category is computed
-  by adding the product of `(- sum(g_sum) / (sum(h_sum) + lambda)) * weight`
-  for each model associated to this category in the ensemble. The final
-  prediction
-  is the most probable category. The `softmax` function is
-  used to normalize these probabilities. To decide in case of tie break the
-  order of categories
-  in the ensemble objective field summary is used.
-  This has caused the `Ensemble`
-  to include also the fields structure.
-
-[Ensemble](https://github.com/bigmlcom/python/blob/boosted/bigml/ensemble.py)
-
-The information of `weight` and `class` is added to each prediction in the
-`MultiModel` class:
-[MultiModel](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-21ed79c5ab53d55f5e4f79a211d6875f)
-
-The implementation of these sums and normalizations is done
-in the `MultiVote` class.
-[MultiVote](https://github.com/bigmlcom/python/commit/1c55e346156491c1383db92655224f8eedab1ac1#diff-90180690cbb5b54d110f92b01c9e3878)
-
-We choose to add a `BOOSTING = -1` code in the `MultiVote` class to mean
-that boosting combiner is used. The code is set to a negative to allow that
-other user-given combiner codes can be added in the future using the following
-correlative integers.
 
 *Test samples:*
 
-We use the `data/iris.csv` and `data/grades.csv` sample files to
-build a boosted ensemble and use it in a local `Ensemble`.
+We use the `data/grades.csv` sample file to build a dataset and use this
+dataset to create, update and delete a `timeseries` resource and their related
+`forecast` resource.
 
-Correction to the boosted ensembles
------------------------------------
+<a name="localTimeSeries"></a>
+Local Time-Series
+-----------------
 
-*Affects:* The local `Ensemble` class, and the
-`MultiVote` class.
+*Affects:* It's a new object that encapsulates the JSON information downloaded
+from a remote `timeseries` resource and adds a `forecast` method
+to create forecasts locally. Similar to the `Model` object in Python
+bindings.
 
-*Description:* The boosted ensembles add two properties: `initial_offset` and
-`initial_offsets`. The first one applies to regressions and contains a real
-value and the second one to
-classifications and contains a map from each objective field class to the
-associated real values. These values are quantities that need to be added to
-the model's predictions to compute the final ensemble prediction. Thus,
-each model's prediction is computed as explained in the previous section,
-but the final ensemble prediction is
+*Description:* The local time-series object will encapsulate the
+information found in the `time_series` attribute of the resource
+JSON needed to compute the forecasts.
 
-for regressions:
-    - Add the local model weighted predictions
-    - Add the `initial_offset`
+The `timeseries` JSON will contain under the `time_series` attribute
+a list of submodels and their characteristic coefficients.
 
-for classifications, per each category:
-    - Add all the local model weighted predictions for the category models
-    - Add the `initial_offsets[category]` value
-    - normalize using `softmax`
+A difference with the rest of supervised learning methods is that a `timeseries`
+model can have more than one objective field. They can be specified
+using `objective_fields`. If the `all_numeric_objective`
+parameter is set to `true`, then all the numeric fields will be considered
+as objective fields.
+
+The optional parameters for a `timeseries` include also `error`, `damped_trend`,
+`seasonality`, `trend`, `time_range`, `period` (if is set to values > 1,
+then seasonality is applied) and `field_parameters`.
+
+The created submodels will be defined by some coefficients. They all have a
+level component `l` and a smoothing coefficient `alpha`.
+Additive and multiplicative trend models introduce
+a trend component `b` and its smoothing coefficient `beta`.
+Damped trend models introduce an additional damping coefficient `phi`
+Seasonal models will add `m` seasonal components `s_m`,
+where `m` is the period length (e.g. 12 for monthly data)
+and a single smoothing coefficient gamma.
+
+Counting all parameter combinations, there are 30 different exponential
+smoothing types which can be used to model the data, each defining
+a unique recursive relationship. Some of them are not explored, though,
+for numerical stability reasons. These are: "A,M,\*"  "A,\*,M", "M,M,A" and
+"M,Md,A".
+
+The user can either specify a desired
+submodel type, or wintermute can simply return the results
+from fitting every type.
+
+The local `forecasts` will be different from the remote ones, because they
+will only contain the `point_forecasts` (the predictions for the new points),
+but not the error intervals. Each type of submodel has its own formula to
+compute forecasts, however the number of function can be reduced because:
+
+- the error type does not change the computation formula.
+- seasonality coefficients are only added or multiplied to the non-seasonal
+  formula when required.
+
+This reduces the number of functions to be computed to 5, one per
+`trend + damped_trend` combination. An example of the required functions
+can be found in the
+[tssubmodels.py](https://github.com/mmerce/python/blob/timeseries/bigml/tssubmodels.py)
+file in the Python bindings.
+
+
+*Test samples:*
+
+We can test the local time-series and forecasts using the `data/grades.csv`
+sample file. See also the examples of
+[tests](https://github.com/mmerce/python/blob/timeseries/bigml/tests/test_35_compare_predictions.py)
+in the Python bindings.
