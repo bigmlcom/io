@@ -117,6 +117,9 @@ The user can either specify a desired
 submodel type, or wintermute can simply return the results
 from fitting every type.
 
+An example of local time series model is the one in the
+[Python bindings](https://github.com/mmerce/python/blob/timeseries/bigml/timeseries.py).
+
 The local `forecasts` will be different from the remote ones, because they
 will only contain the `point_forecasts` (the predictions for the new points),
 but not the error intervals. Each type of submodel has its own formula to
