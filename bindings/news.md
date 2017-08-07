@@ -40,14 +40,14 @@ will be computed. The value of this map will contain:
 
 The submodels map structure can have the following keys:
 - `indices`: that will contains a list of the indices of the
- `times_series['submodels']` array.
+ `times_series['ets_models']` array.
 - `names`: that will contain a list of names in the above-mentioned format
 - `criterion`: that can be one of the ones available `aic`, `aicc`, and `bic`
   properties in each submodel.
 - `limit`: a positive integer which will set the maximum number of results
   returned.
 
-The submodels returned by selecting by `indices` and `names` will be merged,
+The ets_models returned by selecting by `indices` and `names` will be merged,
 and if none is present, then all models in the `timeseries` will be used. After
 that, the `criterion` will be used to sort them and the `limit` to truncate
 the results.
@@ -55,7 +55,7 @@ the results.
 An example of `input_data` would be:
 
 {"000005": {"horizon": 10,
-            "submodels":{
+            "ets_models":{
                 "indices": [2,5],
                 "names": ["A,N,N", "M,N,N"],
                 "criterion": "aic",
@@ -111,7 +111,10 @@ Counting all parameter combinations, there are 30 different exponential
 smoothing types which can be used to model the data, each defining
 a unique recursive relationship. Some of them are not explored, though,
 for numerical stability reasons. These are: "A,M,\*"  "A,\*,M", "M,M,A" and
-"M,Md,A".
+"M,Md,A". Also the ones with "multiplicative" error when
+the time series contains non-positive
+values, including when missing values are filled with
+`default_numeric_value = "zero"`.
 
 The user can either specify a desired
 submodel type, or wintermute can simply return the results
@@ -133,7 +136,8 @@ This reduces the number of functions to be computed to 5, one per
 `trend + damped_trend` combination. An example of the required functions
 can be found in the
 [tssubmodels.py](https://github.com/mmerce/python/blob/timeseries/bigml/tssubmodels.py)
-file in the Python bindings.
+file in the Python bindings. The computations depend on `l`, `b`, `phi` and
+`s_m`, which are to be found in the `time_series` attribute of the time series.
 
 
 *Test samples:*

@@ -37,7 +37,7 @@ Basic functions:
     - Associations
     - Topic Models
     - Topic Distributions
-    - Time-series
+    - Time series
     - Forecasts
 
 
