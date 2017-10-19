@@ -37,6 +37,7 @@ Basic functions:
     - Associations
     - Topic Models
     - Topic Distributions
+    - Deepnets
     - Time series
     - Forecasts
 
@@ -51,7 +52,7 @@ Advanced functions:
   predictions in a csv format. Some bindings provide methods to download
   such files.
 
-- Local models, ensembles, clusters and anomaly detectors:
+- Local models, ensembles, clusters, anomaly detectors, etc.:
   BigML's predictive models can be
   downloaded as JSON structures. Bindings can provide objects built on this
   JSON which are able to produce local predictions, centroids or anomaly

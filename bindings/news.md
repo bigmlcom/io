@@ -6,6 +6,8 @@ at the top of the list.
 Summary
 =======
 
+[Deepnets](archive/news_201710.md)
+
 [Time series and Forecasts](archive/news_201706.md)
 
 [Local Boosted Ensembles](archive/news_201702.md)
