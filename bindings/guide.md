@@ -37,10 +37,9 @@ Basic functions:
     - Associations
     - Topic Models
     - Topic Distributions
-    - Deepnets
     - Time series
     - Forecasts
-
+    - Deepnets
 
   You can learn about the properties of these resources and the API calls'
   arguments in the [developers section](https://bigml.com/developers) of
