@@ -14,15 +14,16 @@ evaluations and predictions programmatically:
 - [Bash bindings](https://github.com/bigmlcom/bigml-bash)
 - [Ruby bindings](http://vigosan.github.com/big_ml/)
 - [Java bindings](https://github.com/bigmlcom/bigml-java)
-- [ML4iOS, iOS bindings](https://github.com/bigmlcom/ml4ios)
-- [Swifth](https://github.com/bigmlcom/bigml-swift)
+- [PHP bindings](https://github.com/bigmlcom/bigml-php)
+- [Objective C bindings](https://github.com/bigmlcom/bigml-objc)
+- [Swift](https://github.com/bigmlcom/bigml-swift)
 
 We have also open-sourced some general-purpose libraries:
 
 - [Histogram](https://github.com/bigmlcom/histogram), Java and Clojure libraries to create any-time histograms from streaming data
 - [Sampling](https://github.com/bigmlcom/sampling), a Clojure library for sampling arbitrarily sized sequences
 - [Sketchy](https://github.com/bigmlcom/sketchy), Sketching algorithms for Clojure
-- Our [closchema fork](https://github.com/bigmlcom/closchema), to validate JSON documents using JSON schemas
+- Our [closchema fork](https://github.com/bigmlcom/closchema), a Clojure libnrary to validate JSON documents using JSON schemas
 
 ## Support
 
